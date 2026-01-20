@@ -1,0 +1,94 @@
+* {
+  font-family: Arial, sans-serif;
+}
+
+.page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f6b1d8, #f9d4ec);
+}
+
+.login-box {
+  width: 380px;
+  background: #f2f2f2;
+  border: 1px solid #bbb;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+  background: #e1e1e1;
+  padding: 8px 12px;
+  font-weight: bold;
+  color: #b30059;
+  border-bottom: 1px solid #ccc;
+}
+
+.content {
+  padding: 15px;
+}
+
+.welcome {
+  color: red;
+  font-weight: bold;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.form {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.avatar {
+  font-size: 60px;
+  color: #c2185b;
+}
+
+.fields {
+  flex: 1;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.row label {
+  width: 70px;
+  font-size: 14px;
+}
+
+.row input {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #999;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.login-btn {
+  background: #e6ffe6;
+  border: 1px solid #6db36d;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.close-btn {
+  background: #ffe6e6;
+  border: 1px solid #cc6666;
+  padding: 5px 12px;
+  cursor: pointer;
+}
