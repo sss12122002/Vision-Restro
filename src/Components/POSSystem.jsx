@@ -36,10 +36,13 @@ const POSSystem = () => {
           name: product.productName,
           rate: product.price,
           qty: 1,
+          uom : product.uom,
         },
       ]);
     }
   };
+
+  
 
   // ===== CALCULATIONS =====
   const itemCount = cart.reduce((sum, i) => sum + i.qty, 0);
@@ -49,6 +52,47 @@ const POSSystem = () => {
   );
   const vat = subTotal * 0.05;
   const total = subTotal + vat;
+
+  // ===== SAVE ORDER =====
+const handleOk = async () => {
+  if (cart.length === 0) {
+    alert("Cart is empty");
+    return;
+  }
+
+  try {
+    for (const i of cart) {
+      const payload = {
+        productName: i.name,
+        price: i.rate,
+        qty: i.qty,
+        uom: i.uom,
+        tableName: tableName,
+        vat: vat,
+        total: subTotal,
+        totalAmount: total,
+      };
+
+      await axios.post("http://localhost:8080/api/productsave", payload);
+    }
+
+    // ✅ SAVE SUCCESS → TABLE STATUS STORE
+    localStorage.setItem(`table_${tableName}`, "saved");
+
+    alert("Order saved successfully");
+    setCart([]);
+
+  } catch (error) {
+    console.error("Save error", error);
+    alert("Failed to save order");
+  }
+};
+
+
+
+
+  
+
 
   return (
     <div className="container-fluid vh-100 d-flex flex-column bg-light p-0 overflow-hidden">
@@ -137,7 +181,7 @@ const POSSystem = () => {
                 <tr key={i.id}>
                   <td>{i.name}</td>
                   <td>{i.qty}</td>
-                  <td>PCS</td>
+                  <td>{i.uom}</td>
                   <td></td>
                   <td>{i.rate}</td>
                   <td>{(i.qty * i.rate).toFixed(2)}</td>
@@ -224,7 +268,13 @@ const POSSystem = () => {
             <input className="form-control form-control-sm" />
           </div>
           <div className="col-auto d-flex gap-2">
-            <button className="btn btn-sm btn-outline-secondary">✔ Ok</button>
+            <button
+  className="btn btn-sm btn-outline-secondary"
+  onClick={handleOk}
+>
+  ✔ Ok
+</button>
+
             <button className="btn btn-sm btn-outline-secondary">✖ Cancel</button>
           </div>
         </div>

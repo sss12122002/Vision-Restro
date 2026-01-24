@@ -1,5 +1,7 @@
 import "./Dashboard.css";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import TableTransfer from "./TableTransfer";
 
 const outlets = [
   "Bhoj-1", "Bhoj-5", "MKN 4", "MKN 8", "SM1", "LB-3", "LB-7", "FDS-3", "TA-1",
@@ -9,7 +11,19 @@ const outlets = [
 ];
 
 const Dashboard = () => {
-  const navigate = useNavigate(); // ✅ Initialize navigate
+  const navigate = useNavigate();
+  const [showTableTransfer, setShowTableTransfer] = useState(false);
+
+  const [activeTables, setActiveTables] = useState(() => {
+  // Initially load from localStorage ya empty
+  const saved = {};
+  outlets.forEach((table) => {
+    if (localStorage.getItem(`table_${table}`) === "saved") {
+      saved[table] = true;
+    }
+  });
+  return saved;
+});
 
   return (
     <div className="app">
@@ -34,7 +48,15 @@ const Dashboard = () => {
         <ul>
           <li>Bill Reprint (F4)</li>
           <li>Unbilled Order (F12)</li>
-          <li>Table Transfer (F7)</li>
+
+          {/* ✅ TABLE TRANSFER CLICK */}
+          <li
+            style={{ cursor: "pointer", color: "blue" }}
+            onClick={() => setShowTableTransfer(true)}
+          >
+            Table Transfer (F7)
+          </li>
+
           <li>Item Transfer (F2)</li>
         </ul>
 
@@ -75,14 +97,37 @@ const Dashboard = () => {
             <div
               key={index}
               className="card"
-              onClick={() => navigate(`/pos/${item}`)} // ✅ Navigate to POSSystem
-              style={{ cursor: "pointer" }}
+              style={{
+                cursor: "pointer",
+                backgroundColor:
+                  localStorage.getItem(`table_${item}`) === "saved"
+                    ? "green"
+                    : "#fa0e0e",
+                color:
+                  localStorage.getItem(`table_${item}`) === "saved"
+                    ? "white"
+                    : "black",
+              }}
+              onClick={() => navigate(`/pos/${item}`)}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                navigate(`/billing/${item}`);
+              }}
             >
               {item}
             </div>
           ))}
         </div>
       </main>
+
+      {/* ✅ POPUP MODAL */}
+      {showTableTransfer && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <TableTransfer onClose={() => setShowTableTransfer(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
