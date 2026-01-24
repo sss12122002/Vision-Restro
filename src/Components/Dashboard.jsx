@@ -105,7 +105,7 @@ const Dashboard = () => {
                     : "#fa0e0e",
                 color:
                   localStorage.getItem(`table_${item}`) === "saved"
-                    ? "white"
+                    ? "red"
                     : "black",
               }}
               onClick={() => navigate(`/pos/${item}`)}
