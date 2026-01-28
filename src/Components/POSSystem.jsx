@@ -13,7 +13,7 @@ const POSSystem = () => {
   // ===== FETCH PRODUCTS =====
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/products")
+      .get("https://visionrestro.railway.app/api/products")
       .then((res) => setProducts(res.data))
       .catch((err) => console.error("Product fetch error", err));
   }, []);
