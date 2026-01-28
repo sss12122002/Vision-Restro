@@ -4,8 +4,8 @@ import axios from "axios";
 
 /**
  * Props:
- * onClose()            -> popup close karne ke liye
- * onTableUpdated(name)-> dashboard ko batane ke liye kaunsa table active hua
+ * onClose()            -> popup close 
+ * onTableUpdated(name)-> dashboard recommended table active 
  */
 const TableTransfer = ({ onClose, onTableUpdated }) => {
   const [fromTable, setFromTable] = useState("");
@@ -22,7 +22,7 @@ const TableTransfer = ({ onClose, onTableUpdated }) => {
 
     try {
       const response = await axios.put(
-        "http://localhost:8080/api/updatetable",
+        "https://visionrestro.railway.app/api/updatetable",
         null,
         {
           params: {
